@@ -1,10 +1,10 @@
 <div ng-switch="pageState">
 	<!-- event -->
 	<div ng-switch-when="event">
-		<form ng-submit="submit()">
+		<form ng-submit="submit()" ng-controller="eventController">
 			<div class="row">
 				<label>Event name</label>
-				<input class="u-full-width" type="text" placeholder="e.g. Charlie's 7th birthday" ng-model="eventName">
+				<input class="u-full-width" type="text" placeholder="e.g. Charlie's 7th birthday" ng-model="eventName" required>
 			</div>
 
 			<div class="row">
@@ -12,25 +12,46 @@
 				<textarea class="u-full-width" style="resize: vertical;" type="text" placeholder="e.g. Celebrate a birthday on the Princess Cruise" ng-model="eventDetail"></textarea>
 			</div>
 
-			<div class="row">
+			<!-- <div class="row">
 				<label>Location</label>
 				<input class="u-full-width" type="text" placeholder="e.g. Caribbean Ocean" ng-model="eventLocation">
-			</div>
+			</div> -->
 
-			<div class="row">
+			<!-- <div class="row">
 				<label>Event timeframe within</label>
 				<select class="u-full-width" ng-selected="Week" ng-model="eventTimeframe">
-				    <option value="1">Week</option>
-				    <option value="1">Month</option>
-				    <option value="2">Year</option>
+				    <option value="week">Week</option>
+				    <option value="month">Month</option>
+				    <option value="year">Year</option>
 				</select>
-			</div>
+			</div> -->
 			<input class="button-primary" type="submit" value="Next">
 		</form>
 	</div>
 
+	<div ng-switch-when="share">
+		<div class="row">
+				<b>{{shareData.name}}</b>
+				<br>
+				<span>{{shareData.detail}}</span>
+		</div>
+
+		<div class="row">
+			<b>Share link</b>
+			<br>
+			<a href="{{permalink}}">{{permalink}}</a>
+		</div>
+
+		<div class="row">
+			<b>Share buttons</b>
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{permalink}}" target="_blank">Facebook</a>
+			<a href="https://mobile.twitter.com/compose/tweet?status={{whatsappText | encodeURI}}" target="_blank">Twitter</a>
+			<a href="whatsapp://send?text={{whatsappText | encodeURI}}" ng-show="isPhone">WhatsApp</a>
+		</div>
+	</div>
+
 	<!-- name -->
-	<div ng-switch-default>
+	<div ng-switch-when="name">
 		<form ng-submit="submit()" ng-controller="nameController">
 			<div class="row">
 				<label>What's your name?</label>
@@ -39,5 +60,10 @@
 				</div>
 			<input class="button-primary" type="submit" value="Next">
 		</form>
+	</div>
+
+	<div ng-switch-default>
+		Something went wrong! You shouldn't see this page
+		<!-- add log -->
 	</div>
 </div>
