@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1, user-scalable=no">
+
+  <title>Joshua</title>
+  <link rel="stylesheet" href="/normalize.css">
+  <link rel="stylesheet" href="/skeleton.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet", type="text/css">
+  <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body ng-controller="mainController">
+  <!-- Content -->
+  <div ng-view class="container" ng-class="[effect]">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-animate.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "quick-scheduling",
+  "version": "0.0.0",
+  "description": "quick-scheduling\r ================",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.10.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adrianlee/quick-scheduling.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianlee/quick-scheduling/issues"
+  },
+  "homepage": "https://github.com/adrianlee/quick-scheduling"
+}

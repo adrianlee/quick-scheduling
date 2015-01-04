@@ -1,0 +1,43 @@
+<div ng-switch="pageState">
+	<!-- event -->
+	<div ng-switch-when="event">
+		<form ng-submit="submit()">
+			<div class="row">
+				<label>Event name</label>
+				<input class="u-full-width" type="text" placeholder="e.g. Charlie's 7th birthday" ng-model="eventName">
+			</div>
+
+			<div class="row">
+				<label>Event details</label>
+				<textarea class="u-full-width" style="resize: vertical;" type="text" placeholder="e.g. Celebrate a birthday on the Princess Cruise" ng-model="eventDetail"></textarea>
+			</div>
+
+			<div class="row">
+				<label>Location</label>
+				<input class="u-full-width" type="text" placeholder="e.g. Caribbean Ocean" ng-model="eventLocation">
+			</div>
+
+			<div class="row">
+				<label>Event timeframe within</label>
+				<select class="u-full-width" ng-selected="Week" ng-model="eventTimeframe">
+				    <option value="1">Week</option>
+				    <option value="1">Month</option>
+				    <option value="2">Year</option>
+				</select>
+			</div>
+			<input class="button-primary" type="submit" value="Next">
+		</form>
+	</div>
+
+	<!-- name -->
+	<div ng-switch-default>
+		<form ng-submit="submit()" ng-controller="nameController">
+			<div class="row">
+				<label>What's your name?</label>
+				<small>So your friends can identify you</small>
+					<input class="u-full-width" type="text" placeholder="Joshua" ng-model="name">
+				</div>
+			<input class="button-primary" type="submit" value="Next">
+		</form>
+	</div>
+</div>
