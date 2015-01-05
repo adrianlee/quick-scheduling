@@ -1,20 +1,31 @@
-<div class="home">
-	<h5>
-		Hi {{name}},
-	</h5>
-	<h1>
-		<a href="#/new">create</a>
-	</h1>
+<div>
+  <div class="row">
+  	<h4>
+  		Hello {{name}},
+  	</h4>
+  </div>
+
+  <div class="row">
+  	<h4>
+  		<a href="#/new">Create</a>
+  	</h4>
+  </div>
 
 	<!-- 
-	<h1>
+	<h4>
 		<span>find</span>
 		<input placeholder="h4yp3x9"/>
-	</h1>
+	</h4>
 	-->
+  <div class="row" ng-show="showRecent">
+  	<h4>Recent</h4>
 
-	<h1>recent</h1>
-	<ul>
-		<li ng-repeat="event in recent"><strong><a ng-href="#/e/{{event.id}}">{{event.id}} - {{event.name}}</strong></li>
-	</ul>
+  	<ul>
+  		<li ng-repeat="event in recent track by $index">
+        <strong>
+          <a ng-href="#/e/{{event.id}}">{{ event.timestamp | date : "MMM d" }} - {{event.name}}</a>
+        </strong>
+      </li>
+  	</ul>
+  </div>
 </div>

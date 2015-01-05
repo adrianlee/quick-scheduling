@@ -1,1 +1,11 @@
-event
+<div ng-hide="data">
+  Event not found
+</div>
+
+<div ng-show="data">
+  <div class="row">
+      <b>{{data.name}}</b>
+      <br>
+      <span>{{data.detail}}</span>
+  </div>
+</div>

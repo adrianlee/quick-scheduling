@@ -1,10 +1,10 @@
 <div ng-switch="pageState">
 	<!-- event -->
 	<div ng-switch-when="event">
-		<form ng-submit="submit()" ng-controller="eventController">
+		<form ng-submit="submitEvent()" autocomplete="on">
 			<div class="row">
 				<label>Event name</label>
-				<input class="u-full-width" type="text" placeholder="e.g. Charlie's 7th birthday" ng-model="eventName" required>
+				<textarea class="u-full-width" style="resize: none;" placeholder="e.g. Charlie's 7th birthday" ng-model="eventName" required></textarea>
 			</div>
 
 			<div class="row">
@@ -44,7 +44,8 @@
 
 		<div class="row">
 			<b>Share buttons</b>
-			<a href="https://www.facebook.com/sharer/sharer.php?u={{permalink}}" target="_blank">Facebook</a>
+			<br>
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{permalink | encodeURI}}" target="_blank">Facebook</a>
 			<a href="https://mobile.twitter.com/compose/tweet?status={{whatsappText | encodeURI}}" target="_blank">Twitter</a>
 			<a href="whatsapp://send?text={{whatsappText | encodeURI}}" ng-show="isPhone">WhatsApp</a>
 		</div>

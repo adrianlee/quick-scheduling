@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser');
-var express = require('express')
+var express = require('express');
 var app = express();
+var db = require('./database');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -11,16 +12,35 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // create a new event
 app.post('/event', function (req, res) {
-  console.log(req);
+  console.log(req.body);
 
-  res.send(req.body);
+  if (!req.body.name) {
+    return res.sendStatus(400);
+  }
+
+  var newEvent = new db.Event({ name: req.body.name, detail: req.body.detail });
+
+  newEvent.save(function (err, doc) {
+    if (err)
+      return res.send(400, err);
+
+    res.send(doc);
+  });
+
 });
 
 // fetch event
 app.get('/event/:id', function (req, res) {
-  console.log(req.params.id);
+  db.Event.findOne({ id: req.params.id }, function (err, doc) {
+    if (err) return res.sendStatus(400);
 
-  res.send(req.params);
+    if (doc) {
+      res.send(doc);
+    } else {
+      res.sendStatus(404);
+    }
+  });
+
 });
 
 // create event entry
