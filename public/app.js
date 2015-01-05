@@ -14,6 +14,10 @@ App.config(function($routeProvider) {
         	templateUrl: 'views/home.html',
         	controller:  'homeController'
         })
+        .when('/settings', {
+          templateUrl: 'views/settings.html',
+          controller:  'settingsController'
+        })
         .when('/e/:id', {
         	templateUrl: 'views/event.html',
         	controller:  'eventController',
@@ -132,11 +136,32 @@ App.controller("nameController", function ($scope, $http, $window) {
 	console.log("nameController")
 
 	$scope.submit = function() {
-        if (this.name) {
-        	$window.localStorage.name = this.name;
-    		$scope.$parent.next();
-        }
-    };
+    if (this.name) {
+    	$window.localStorage.name = this.name;
+		  $scope.$parent.next();
+    }
+  };
+});
+
+App.controller("settingsController", function ($scope, $http, $window) {
+  console.log("settingsController")
+
+  $scope.name = $window.localStorage.name;
+
+  $scope.change = function() {
+    console.log("asdf");
+    if (this.name) {
+      $window.localStorage.name = this.name;
+    }
+  };
+
+  $scope.clearRecent = function () {
+    delete $window.localStorage.recent;
+  }
+
+  $scope.back = function () {
+    $window.history.back();
+  }
 });
 
 

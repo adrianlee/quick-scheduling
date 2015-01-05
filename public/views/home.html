@@ -1,7 +1,7 @@
 <div>
   <div class="row">
   	<h4>
-  		Hello {{name}},
+  		Hello {{::name}},
   	</h4>
   </div>
 
@@ -9,6 +9,12 @@
   	<h4>
   		<a href="#/new">Create</a>
   	</h4>
+  </div>
+
+  <div class="row">
+    <h4>
+      <a href="#/settings">Settings</a>
+    </h4>
   </div>
 
 	<!-- 
@@ -23,7 +29,7 @@
   	<ul>
   		<li ng-repeat="event in recent track by $index">
         <strong>
-          <a ng-href="#/e/{{event.id}}">{{ event.timestamp | date : "MMM d" }} - {{event.name}}</a>
+          <a ng-href="#/e/{{event.id}}">{{ ::event.timestamp | date : "MMM d" }} - {{::event.name}}</a>
         </strong>
       </li>
   	</ul>

@@ -25,29 +25,29 @@
 				    <option value="year">Year</option>
 				</select>
 			</div> -->
-			<input class="button-primary" type="submit" value="Next">
+			<input class="button button-primary u-full-width" type="submit" value="Next">
 		</form>
 	</div>
 
 	<div ng-switch-when="share">
 		<div class="row">
-				<b>{{shareData.name}}</b>
+				<b>{{::shareData.name}}</b>
 				<br>
-				<span>{{shareData.detail}}</span>
+				<span>{{::shareData.detail}}</span>
 		</div>
 
 		<div class="row">
 			<b>Share link</b>
 			<br>
-			<a href="{{permalink}}">{{permalink}}</a>
+			<a href="{{::permalink}}">{{::permalink}}</a>
 		</div>
 
 		<div class="row">
 			<b>Share buttons</b>
 			<br>
-			<a href="https://www.facebook.com/sharer/sharer.php?u={{permalink | encodeURI}}" target="_blank">Facebook</a>
-			<a href="https://mobile.twitter.com/compose/tweet?status={{whatsappText | encodeURI}}" target="_blank">Twitter</a>
-			<a href="whatsapp://send?text={{whatsappText | encodeURI}}" ng-show="isPhone">WhatsApp</a>
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{::permalink | encodeURI}}" target="_blank">Facebook</a>
+			<a href="https://mobile.twitter.com/compose/tweet?status={{::whatsappText | encodeURI}}" target="_blank">Twitter</a>
+			<a href="whatsapp://send?text={{::whatsappText | encodeURI}}" ng-show="isPhone">WhatsApp</a>
 		</div>
 	</div>
 
