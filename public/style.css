@@ -6,3 +6,29 @@ h1, h2, h3, h4, h5 {
 	padding: 0;
 	margin: 0;
 }
+
+.calendar {
+}
+
+.calendar-table {
+  width: 100%;
+}
+
+.calendar-table td {
+  text-align: center;
+  border: 1;
+}
+
+.calendar-header {
+
+}
+
+.calendar-header-day {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.calendar-day {
+  margin: 0;
+  padding: 10px 0;
+}
