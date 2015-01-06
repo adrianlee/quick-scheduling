@@ -1,0 +1,16 @@
+<div ng-hide="data">
+  Event not found
+</div>
+
+<div ng-show="data">
+  <div class="row">
+      <h3>{{::data.name}}</h3>
+      <!-- <h5>{{::data.detail}}</h5> -->
+  </div>
+
+  <div class="row">
+  	<h5>Step 1: Choose dates you are avaliable</h5>
+  </div>
+
+  <div calendar start="" end=""></div>
+</div>

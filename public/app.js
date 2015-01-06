@@ -22,20 +22,39 @@ App.config(function($routeProvider) {
         	templateUrl: 'views/event.html',
         	controller:  'eventController',
         	resolve: {
-				data: function ($q, $http, $route) {
-					var deferred = $q.defer();
+    				data: function ($q, $http, $route) {
+    					var deferred = $q.defer();
 
-					$http.get('/event/' + $route.current.params.id).
-						success(function(data, status, headers, config) {
-							deferred.resolve(data);
-						}).
-						error(function(data, status, headers, config) {
-							deferred.resolve({});
-					});
+    					$http.get('/event/' + $route.current.params.id).
+    						success(function(data, status, headers, config) {
+    							deferred.resolve(data);
+    						}).
+    						error(function(data, status, headers, config) {
+    							deferred.resolve({});
+    					});
 
-					return deferred.promise;
-				}
-			}
+    					return deferred.promise;
+    				}
+    			}
+        })
+        .when('/v/:id', {
+          templateUrl: 'views/vote.html',
+          controller:  'voteController',
+          resolve: {
+            data: function ($q, $http, $route) {
+              var deferred = $q.defer();
+
+              $http.get('/vote/' + $route.current.params.id).
+                success(function(data, status, headers, config) {
+                  deferred.resolve(data);
+                }).
+                error(function(data, status, headers, config) {
+                  deferred.resolve({});
+              });
+
+              return deferred.promise;
+            }
+          }
         })
         .when('/new', {
         	templateUrl: 'views/new.html',
@@ -73,10 +92,10 @@ App.controller("homeController", function ($scope, $http, recentService, $window
   $scope.showRecent = !!$scope.recent.length;
 });
 
-App.controller("newController", function ($scope, $http, $window) {
+App.controller("newController", function ($scope, $http, $window, $location) {
 	console.log("newController")
 
-	var pageStates = ["name", "event", "share"];
+	var pageStates = ["name", "event"];
 
 	$scope.hasName = !!$window.localStorage.name;
 
@@ -93,13 +112,6 @@ App.controller("newController", function ($scope, $http, $window) {
 		}
 
 		$scope.pageState = pageStates[pageStates.indexOf($scope.pageState) + 1];
-	};
-
-	$scope.setShareData = function (data) {
-		$scope.shareData = data;
-		
-		$scope.permalink = "http://" + location.host + "/#/e/" + data.id;
-		$scope.whatsappText = data.name + " - " + $scope.permalink;
 	};
 
 	$scope.submitEvent = function() {
@@ -119,12 +131,12 @@ App.controller("newController", function ($scope, $http, $window) {
     					// when the response is available
     					console.log("Event created", data);
 
-    					$scope.setShareData(data);
-    					$scope.next();
+    					$location.path('/e/' + data.id);
     				}).
     				error(function(data, status, headers, config) {
     					// called asynchronously if an error occurs
     					// or server returns response with an error status.
+              alert("Unable to save event. Please try again.")
     					console.error("Something went wrong!");
     					console.error(data);
     				});
@@ -172,8 +184,22 @@ App.controller("eventController", function ($scope, $http, data, recentService) 
     $scope.data = data;
     
     recentService.addRecent({ name: data.name, id: data.id });
+
+    $scope.shareData = data;
+      
+    $scope.permalink = "http://" + location.host + "/#/e/" + data.id;
+    $scope.whatsappText = data.name + " - " + $scope.permalink;
   }
 });
+
+App.controller("voteController", function ($scope, $http, data, recentService) {
+  console.log("voteController")
+  
+  if (data) {
+    $scope.data = data;
+  }
+});
+
 
 
 App.service("recentService", function () {

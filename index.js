@@ -50,6 +50,19 @@ app.post('/event/:id', function (req, res) {
   res.send(req.body);
 });
 
+// fetch event
+app.get('/vote/:id', function (req, res) {
+  db.Event.findOne({ id: req.params.id }, function (err, doc) {
+    if (err) return res.sendStatus(400);
+
+    if (doc) {
+      res.send(doc);
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(err, req, res, next){

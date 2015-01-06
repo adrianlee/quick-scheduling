@@ -4,8 +4,24 @@
 
 <div ng-show="data">
   <div class="row">
-      <b>{{::data.name}}</b>
-      <br>
-      <span>{{::data.detail}}</span>
+      <h3>{{::data.name}}</h3>
+      <h5>{{::data.detail}}</h5>
+  </div>
+  
+  <div class="row">
+    <a href="#/v/{{::data.id}}" class="button u-full-width">Vote</a>
+  </div>
+
+  <div class="row">
+    <b>Share link</b>
+    <br>
+    <a href="{{::permalink}}">{{::permalink}}</a>
+    <br>
+    <b>Share buttons</b>
+    <br>
+    <a HREF="mailto:?subject={{::data.name}}&body={{::data.name}}%0A%0A{{::data.detail}}%0A%0A{{::permalink}}">Email</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{::permalink | encodeURI}}" target="_blank">Facebook</a>
+    <a href="https://mobile.twitter.com/compose/tweet?status={{::whatsappText | encodeURI}}" target="_blank">Twitter</a>
+    <a href="whatsapp://send?text={{::whatsappText | encodeURI}}" ng-show="isPhone">WhatsApp</a>
   </div>
 </div>
