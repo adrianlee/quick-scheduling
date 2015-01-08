@@ -163,8 +163,8 @@
 }
 
 .clndr {
-  overflow: hidden;
-  border-bottom: 7px solid #69a776;
+  /*overflow: hidden;*/
+  /*border-bottom: 7px solid #69a776;*/
 }
 .clndr .clndr-controls {
   background-color: #69a776;
@@ -225,4 +225,16 @@
 .clndr-controls .inactive {
   color: #69a776;
   background-color: #69a776;
+}
+
+/*td:first-child {
+  padding-left: 15px;
+}
+
+td:last-child {
+  padding-right: 15px;
+}*/
+
+td {
+  padding: 12px 0;
 }

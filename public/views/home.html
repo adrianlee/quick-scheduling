@@ -17,20 +17,12 @@
     </h4>
   </div>
 
-	<!-- 
-	<h4>
-		<span>find</span>
-		<input placeholder="h4yp3x9"/>
-	</h4>
-	-->
   <div class="row" ng-show="showRecent">
   	<h4>Recent</h4>
 
   	<ul>
   		<li ng-repeat="event in recent track by $index">
-        <strong>
-          <a ng-href="#/e/{{event.id}}">{{ ::event.timestamp | date : "MMM d" }} - {{::event.name}}</a>
-        </strong>
+        <a ng-href="#/e/{{event.id}}">{{ ::event.timestamp | date : "MMM d" }} - {{::event.name}}</a>
       </li>
   	</ul>
   </div>

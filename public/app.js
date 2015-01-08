@@ -1,3 +1,5 @@
+'use strict';
+
 var App = angular.module('scheduling', ['ngRoute', 'ngAnimate'], function ($compileProvider) {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|whatsapp):/);
 });
@@ -71,8 +73,6 @@ App.filter("encodeURI", function ($window) {
 
 App.controller("mainController", function ($scope, $http) {
 	console.log("mainController")
-
-	$scope.effect = "slide";
 
 	// hide whatsapp button on desktops
 	$scope.isPhone = (navigator.userAgent.match(/Android|iPhone/i) && !navigator.userAgent.match(/iPod/i));
@@ -226,7 +226,7 @@ App.service("recentService", function () {
 App.controller("calendarController", function ($scope) {
   console.log("calendarController");
 
-  $('#calendar').clndr({
+  var calendar = $('#calendar').clndr({
   	template: $("#calendar-template").html(),
   	startWithMonth: moment(),
   	// forceSixRows: true,
@@ -245,4 +245,6 @@ App.controller("calendarController", function ($scope) {
 	    endDate: moment().add(3, 'M')
 	  }
   });
+
+  window.calendar = calendar;
 });
