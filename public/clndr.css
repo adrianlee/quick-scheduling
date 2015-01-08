@@ -238,3 +238,13 @@ td:last-child {
 td {
   padding: 12px 0;
 }
+
+.event {
+  background-color: #9FD6E7;
+  color: #FFFFFF;
+}
+
+.day {
+  border-bottom: 1px solid #ededed; 
+  border-right: 1px solid #ededed; 
+}

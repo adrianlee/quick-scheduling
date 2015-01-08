@@ -243,7 +243,18 @@ App.controller("calendarController", function ($scope) {
   	constraints: {
 	    startDate: moment(),
 	    endDate: moment().add(3, 'M')
-	  }
+	},
+	clickEvents: {
+	    click: function(target) {
+	    	if (target.element.className.indexOf("event") > -1) {
+		    	calendar.removeEvents(function(event) {
+				  	return event.date._i == target.date._i;
+				});
+	    	} else {
+	    		calendar.addEvents([{ date: target.date, title: 'Adrian' }]);
+	    	}
+	    }
+	}
   });
 
   window.calendar = calendar;
