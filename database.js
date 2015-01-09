@@ -4,7 +4,15 @@ mongoose.connect('mongodb://adrian:123123123@ds031108.mongolab.com:31108/quicksc
 module.exports.Event = mongoose.model('Event', {
 	name: String,
 	detail: String,
-	id: { type: String, default: function () { return makeid() }}
+	id: { type: String, default: function () { return makeid() }},
+  events: [{
+    title: String,
+    date: Date,
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
+  }]
 });
 
 

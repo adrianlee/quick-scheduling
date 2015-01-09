@@ -12,8 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // create a new event
 app.post('/event', function (req, res) {
-  console.log(req.body);
-
   if (!req.body.name) {
     return res.sendStatus(400);
   }
@@ -44,10 +42,20 @@ app.get('/event/:id', function (req, res) {
 });
 
 // create event entry
-app.post('/event/:id', function (req, res) {
-  console.log(req);
+app.post('/vote/:id', function (req, res) {
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
 
-  res.send(req.body);
+  db.Event.findOneAndUpdate({ id: req.params.id }, { $pushAll: { events: req.body.events } }, { upsert: true }, function (err, doc) {
+    if (err) return res.sendStatus(400);
+
+    if (doc) {
+        res.send(200);
+    } else {
+      res.sendStatus(404);
+    }
+  });
 });
 
 // fetch event
