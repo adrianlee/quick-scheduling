@@ -5,14 +5,7 @@ module.exports.Event = mongoose.model('Event', {
 	name: String,
 	detail: String,
 	id: { type: String, default: function () { return makeid() }},
-  events: [{
-    title: String,
-    date: Date,
-    timestamp: {
-      type: Date,
-      default: Date.now
-    }
-  }]
+  events: { type: mongoose.Schema.Types.Mixed }
 });
 
 

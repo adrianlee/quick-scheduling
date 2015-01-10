@@ -100,7 +100,6 @@ App.controller("newController", function ($scope, $http, $window, $location) {
 	$scope.hasName = !!$window.localStorage.name;
 
 	$scope.pageState = "name";
-	$scope.shareData = {};
 
 	if ($scope.hasName) {
 		$scope.pageState = "event";
@@ -208,8 +207,6 @@ App.controller("eventController", function ($scope, $http, data, recentService) 
     
     recentService.addRecent({ name: data.name, id: data.id });
 
-    $scope.shareData = data;
-
     $scope.permalink = "http://" + location.host + "/#/e/" + data.id;
     $scope.whatsappText = data.name + " - " + $scope.permalink;
   }
@@ -228,36 +225,51 @@ App.factory("Dates", function () {
 	}
 
 	Dates.removeEvent = function (oldEvent) {
-		this.events.splice(this.events.indexOf(oldEvent), 1);
+		for (var i = 0, len = this.events.length; i < len; i++) {
+			if (this.events[i] && (new Date(this.events[i].date).getTime() == oldEvent.date.getTime())) {
+				this.events.splice(i, 1);
+				break;
+			}
+		}
 		console.log(this.events);
 	}
 
 	Dates.clear = function () {
 		this.data = null;
-		this.events.length = 0;
+		this.events = [];
 	}
 
 	Dates.setData = function (data) {
 		this.clear();
 		this.data = data;
+		this.events = data && data.events && data.events[window.localStorage.name] || [];
+	}
+
+	Dates.getMyEvents = function () {
+		return this.events;
 	}
 
 	return Dates;
 });
 
-App.controller("voteController", function ($scope, $http, data, Dates) {
+App.controller("voteController", function ($scope, $http, data, Dates, $location) {
   console.log("voteController")
+
+  var self = this;
   
   if (data) {
     $scope.data = data;
-    Dates.setData(data);;
+    Dates.setData(data);
   }
 
+  console.log(Dates)
+
   $scope.submit = function () {
-  	$http.post("/vote/" + data.id, { events: Dates.events }).
-  		success(function (data, status, headers, config) {
+  	$http.post("/vote/" + data.id, { name: window.localStorage.name, events: Dates.events }).
+  		success(function (body, status, headers, config) {
   			Dates.clear();
-  			console.log(data);
+  			console.log(body);
+  			$location.path('/e/' + data.id);
   		}).
   		error(function (data, status, headers, config) {
   			console.error(data);
@@ -268,7 +280,7 @@ App.controller("voteController", function ($scope, $http, data, Dates) {
 App.controller("calendarController", function ($scope, Dates) {
   console.log("calendarController");
 
-  console.log(Dates.data.events);
+  console.log(Dates.data);
 
   var calendar = $('#calendar').clndr({
   	template: $("#calendar-template").html(),
@@ -290,18 +302,22 @@ App.controller("calendarController", function ($scope, Dates) {
 	},
 	clickEvents: {
 	    click: function(target) {
+	    	if (target.element.className.indexOf("inactive") > -1) {
+	    		return;
+	    	}
+	    	
 	    	if (target.element.className.indexOf("event") > -1) {
 		    	calendar.removeEvents(function(event) {
-				  	return event.date._i == target.date._i;
+				  	return moment(event.date).toDate().getTime() == target.date.toDate().getTime();
 				});
-		    	Dates.removeEvent({ date: target.date.toDate(), title: 'Adrian' });
+		    	Dates.removeEvent({ date: target.date.toDate(), title: '' });
 	    	} else {
-	    		calendar.addEvents([{ date: target.date, title: 'Adrian' }]);
-	    		Dates.addEvent({ date: target.date.toDate(), title: 'Adrian' });
+	    		calendar.addEvents([{ date: target.date, title: '' }]);
+	    		Dates.addEvent({ date: target.date.toDate(), title: '' });
 	    	}
 	    }
 	},
-	events: Dates.data && Dates.data.events
+	events: Dates.getMyEvents()
   });
 
   window.calendar = calendar;

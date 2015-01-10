@@ -41,35 +41,52 @@ app.get('/event/:id', function (req, res) {
 
 });
 
-// create event entry
-app.post('/vote/:id', function (req, res) {
-  if (!req.body) {
-    return res.sendStatus(400);
-  }
-
-  db.Event.findOneAndUpdate({ id: req.params.id }, { $pushAll: { events: req.body.events } }, { upsert: true }, function (err, doc) {
-    if (err) return res.sendStatus(400);
-
-    if (doc) {
-        res.send(200);
-    } else {
-      res.sendStatus(404);
-    }
-  });
-});
-
 // fetch event
 app.get('/vote/:id', function (req, res) {
   db.Event.findOne({ id: req.params.id }, function (err, doc) {
     if (err) return res.sendStatus(400);
 
     if (doc) {
+      console.log(doc);
       res.send(doc);
     } else {
       res.sendStatus(404);
     }
   });
 });
+
+
+// create event entry
+app.post('/vote/:id', function (req, res) {
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+
+  db.Event.findOne({ id: req.params.id }, { upsert: true }, function (err, doc) {
+    if (err) return res.sendStatus(400);
+
+
+    if (doc) {
+        
+        if (!doc.events) {
+          doc.events = {};
+        }
+
+        doc.events[req.body.name] = req.body.events;
+
+        console.log(req.body.events);
+        console.log(doc.events);
+
+        doc.save(function (err, updated) {
+          if (err) return res.sendStatus(400);
+          res.send(updated);
+        });
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+
 
 app.use(express.static(__dirname + '/public'));
 
